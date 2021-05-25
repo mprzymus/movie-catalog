@@ -13,4 +13,12 @@ public interface MovieCommentMapper {
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "movieId", source = "movie.id")
     MovieCommentDto movieCommentToMovieCommentDto(MovieComments movieComments);
+
+    /*@Mapping(target = "rating", source = "rating")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "date", source = "date")
+    @Mapping(target = "comments", source = "comments")*/
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "movie", ignore = true)
+    MovieComments movieCommentDtoToMovieComments(MovieCommentDto movieCommentDto);
 }
