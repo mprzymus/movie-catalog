@@ -19,6 +19,7 @@ public class Movie {
     private String shortDescription;
     private String description;
     private LocalDate date;
+    private String imageUrl;
 
     @ManyToOne
     private User user;
