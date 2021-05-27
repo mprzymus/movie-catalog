@@ -13,6 +13,7 @@ import pl.przymuslogisz.moviecat.repositories.MovieRepository;
 import pl.przymuslogisz.moviecat.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,13 +40,27 @@ public class MovieService {
         var movieToSave = movieMapper.movieDtoToMovie(movieDto);
         var user = userRepository.findById(movieDto.user().id()).orElseThrow();
         movieToSave.setUser(user);
+        addComments(movieToSave, movieDto);
         return movieRepository.save(movieToSave);
     }
 
     private Movie updateMovie(Movie movie, MovieDto movieDto) {
         setFields(movie, movieDto);
+        addComments(movie, movieDto);
+
+        return movieRepository.save(movie);
+
+    }
+
+    private void addComments(Movie movie, MovieDto movieDto) {
         movieDto.comments().forEach(movieCommentDto -> {
-            var commentOptional = commentRepository.findById(movieCommentDto.id());
+            Optional<MovieComments> commentOptional;
+            if (movieCommentDto.id() == null) {
+                commentOptional = Optional.empty();
+            }
+            else {
+                commentOptional = commentRepository.findById(movieCommentDto.id());
+            }
             MovieComments comment;
             if (commentOptional.isPresent()) {
                 comment = commentOptional.get();
@@ -58,8 +73,6 @@ public class MovieService {
                 movie.getComments().add(comment);
             }
         });
-        return movie;
-
     }
 
     private void setFields(Movie movie, MovieDto movieDto) {
