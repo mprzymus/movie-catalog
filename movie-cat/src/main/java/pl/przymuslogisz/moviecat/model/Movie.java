@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,5 +26,5 @@ public class Movie {
     private User user;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<MovieComments> comments;
+    private Set<MovieComments> comments = new HashSet<>();
 }

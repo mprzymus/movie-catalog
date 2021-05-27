@@ -25,10 +25,8 @@ public class MovieService {
 
 
     public MovieDto postMovie(MovieDto movieDto) {
-        var movie = movieRepository.findById(movieDto.id());
         Movie savedMovie;
-        savedMovie = movie.map(value -> updateMovie(value, movieDto))
-                .orElseGet(() -> saveMovie(movieDto));
+        savedMovie = saveMovie(movieDto);
         return movieMapper.movieToMovieDto(savedMovie);
     }
 
@@ -39,7 +37,7 @@ public class MovieService {
 
     private Movie saveMovie(MovieDto movieDto) {
         var movieToSave = movieMapper.movieDtoToMovie(movieDto);
-        var user = userRepository.findById(movieDto.id()).orElseThrow();
+        var user = userRepository.findById(movieDto.user().id()).orElseThrow();
         movieToSave.setUser(user);
         return movieRepository.save(movieToSave);
     }
