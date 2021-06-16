@@ -3,6 +3,7 @@ package pl.przymuslogisz.moviecat.bootstrap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import pl.przymuslogisz.moviecat.model.Movie;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Profile("h2")
 public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final MovieRepository movieRepository;
