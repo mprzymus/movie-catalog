@@ -13,11 +13,13 @@ import java.util.Set;
 @Setter
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String shortDescription;
+
+    @Lob
     private String description;
     private LocalDate date;
     private String imageUrl;
