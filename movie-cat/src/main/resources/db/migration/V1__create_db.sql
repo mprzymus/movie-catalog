@@ -8,6 +8,6 @@ alter table movie add constraint FKnvsn9b9a8fok8dh383pspnxlq foreign key (user_i
 alter table movie_comments add constraint FK96sfs80ga99a5d3lv2krya48g foreign key (movie_id) references movie(id);
 alter table movie_comments add constraint FKjmb1mugjm9oivpxyd56ome82i foreign key (user_id) references user(id);
 
-CREATE USER 'movie_user'@'%' IDENTIFIED BY 'password';
+--CREATE USER 'movie_user'@'%' IDENTIFIED BY 'password';
 
-GRANT ALL PRIVILEGES ON movies.* TO 'movie_user'@'%';
+--GRANT ALL PRIVILEGES ON movies.* TO 'movie_user'@'%';

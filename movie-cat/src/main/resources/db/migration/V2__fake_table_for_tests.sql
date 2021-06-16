@@ -1,0 +1,3 @@
+CREATE TABLE FakeTable (
+    id BIGINT NOT NULL PRIMARY KEY
+)
