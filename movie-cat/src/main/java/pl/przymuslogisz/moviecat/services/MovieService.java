@@ -2,6 +2,7 @@ package pl.przymuslogisz.moviecat.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.przymuslogisz.moviecat.dtos.MovieCommentDto;
 import pl.przymuslogisz.moviecat.dtos.MovieDto;
 import pl.przymuslogisz.moviecat.dtos.MovieList;
 import pl.przymuslogisz.moviecat.mappers.MovieCommentMapper;
@@ -40,20 +41,20 @@ public class MovieService {
         var movieToSave = movieMapper.movieDtoToMovie(movieDto);
         var user = userRepository.findById(movieDto.user().id()).orElseThrow();
         movieToSave.setUser(user);
-        addComments(movieToSave, movieDto);
+        addComments(movieToSave, movieDto.comments());
         return movieRepository.save(movieToSave);
     }
 
     private Movie updateMovie(Movie movie, MovieDto movieDto) {
         setFields(movie, movieDto);
-        addComments(movie, movieDto);
+        addComments(movie, movieDto.comments());
 
         return movieRepository.save(movie);
 
     }
 
-    private void addComments(Movie movie, MovieDto movieDto) {
-        movieDto.comments().forEach(movieCommentDto -> {
+    public void addComments(Movie movie, Iterable<MovieCommentDto> comments) {
+        comments.forEach(movieCommentDto -> {
             Optional<MovieComments> commentOptional;
             if (movieCommentDto.id() == null) {
                 commentOptional = Optional.empty();

@@ -1,6 +1,7 @@
 package pl.przymuslogisz.moviecat.mappers;
 
 import org.junit.jupiter.api.Test;
+import pl.przymuslogisz.moviecat.dtos.MovieCommentDto;
 import pl.przymuslogisz.moviecat.model.Movie;
 import pl.przymuslogisz.moviecat.model.MovieComments;
 import pl.przymuslogisz.moviecat.model.User;
@@ -29,13 +30,29 @@ class MovieCommentMapperTest {
         assertMovieEqualsToConst(mapped);
     }
 
-    public static void assertMovieEqualsToConst(pl.przymuslogisz.moviecat.dtos.MovieCommentDto mapped) {
+    @Test
+    void movieCommentDtoToMovieComment() {
+        var dto = createCommentDto();
+
+        var mapped = mapper.movieCommentDtoToMovieComments(dto);
+
+        assertMovieEqualsToConstDto(mapped);
+    }
+
+    public static void assertMovieEqualsToConst(MovieCommentDto mapped) {
         assertEquals(MOVIE_ID, mapped.movieId());
         assertEquals(USER_ID, mapped.userId());
         assertEquals(ID, mapped.id());
         assertEquals(RATING, mapped.rating());
         assertEquals(DATE, mapped.date());
         assertEquals(COMMENT, mapped.comments());
+    }
+
+    public static void assertMovieEqualsToConstDto(MovieComments mapped) {
+        assertEquals(ID, mapped.getId());
+        assertEquals(RATING, mapped.getRating());
+        assertEquals(DATE, mapped.getDate());
+        assertEquals(COMMENT, mapped.getComments());
     }
 
     public static MovieComments createComment() {
@@ -52,5 +69,9 @@ class MovieCommentMapperTest {
         movieComment.setDate(DATE);
         movieComment.setComments(COMMENT);
         return movieComment;
+    }
+
+    public static MovieCommentDto createCommentDto() {
+        return new MovieCommentDto(ID, COMMENT, RATING, MOVIE_ID, USER_ID, DATE);
     }
 }
