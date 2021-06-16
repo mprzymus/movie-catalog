@@ -1,6 +1,3 @@
-CREATE DATABASE movies;
-USE movies;
-
 create table movie (id bigint not null auto_increment, date date, description longtext, image_url varchar(255), name varchar(255), short_description varchar(255), user_id bigint, primary key (id));
 create table movie_comments (id bigint not null auto_increment, comments varchar(255), date date, rating integer, movie_id bigint, user_id bigint, primary key (id));
 create table user (id bigint not null auto_increment, login varchar(255), password varchar(255), user_name varchar(255), primary key (id));
