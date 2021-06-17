@@ -2,6 +2,7 @@ package pl.przymuslogisz.moviecat.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.przymuslogisz.moviecat.dtos.UserDto;
 import pl.przymuslogisz.moviecat.dtos.UsersDto;
 import pl.przymuslogisz.moviecat.mappers.UserMapper;
 import pl.przymuslogisz.moviecat.model.User;
@@ -21,10 +22,19 @@ public class UserService {
                 .orElseThrow();
     }
 
+    public UserDto getUserDtoByName(String name) {
+        return userMapper.userToUserDto(getUserByName(name));
+    }
+
     public UsersDto getAllUsers() {
         var usersList = StreamSupport.stream(userRepository.findAll().spliterator(), false)
                 .map(userMapper::userToUserDto)
                 .collect(Collectors.toList());
         return new UsersDto(usersList);
+    }
+
+    public UserDto getUserById(Long id) {
+        var user =  userRepository.findById(id).orElseThrow();
+        return userMapper.userToUserDto(user);
     }
 }
